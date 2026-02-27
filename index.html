@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roy Opata Olende — Research Infrastructure for Growing Teams</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --yellow: #F5E642;
+      --yellow-dim: #EDD800;
+      --cream: #FAF8F4;
+      --warm-white: #F5F1EA;
+      --ink: #1A1814;
+      --ink-soft: #44403C;
+      --ink-muted: #8A857F;
+      --sand: #D4C9B8;
+      --sand-light: #EAE3D6;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      padding: 1.1rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(245, 230, 66, 0.94);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--yellow-dim);
+    }
+
+    .nav-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.05rem;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink);
+      text-decoration: none;
+      opacity: 0.55;
+      transition: opacity 0.2s;
+    }
+    .nav-links a:hover { opacity: 1; }
+
+    /* HERO */
+    .hero-wrap {
+      background: var(--yellow);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-wrap::after {
+      content: '';
+      position: absolute;
+      right: -10vw; top: -10vw;
+      width: 55vw; height: 55vw;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+      pointer-events: none;
+    }
+
+    .hero {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 9rem 3rem 6rem;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 4rem;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-text { animation: fadeUp 0.85s ease both; }
+
+    .hero-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(26,24,20,0.55);
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 2rem; height: 1px;
+      background: rgba(26,24,20,0.4);
+    }
+
+    h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.8rem, 5.5vw, 4.6rem);
+      line-height: 1.06;
+      letter-spacing: -0.025em;
+      color: var(--ink);
+      margin-bottom: 1.5rem;
+    }
+
+    h1 em {
+      font-style: italic;
+      position: relative;
+      display: inline-block;
+    }
+    h1 em::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; bottom: -3px;
+      height: 3px;
+      background: var(--ink);
+      opacity: 0.2;
+      border-radius: 2px;
+    }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      color: rgba(26,24,20,0.68);
+      max-width: 44ch;
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-cta-group { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    .btn-dark {
+      display: inline-block;
+      padding: 0.85rem 1.9rem;
+      background: var(--ink);
+      color: var(--yellow);
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .btn-dark:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(26,24,20,0.25); }
+
+    .btn-outline {
+      display: inline-block;
+      padding: 0.85rem 1.9rem;
+      border: 1.5px solid rgba(26,24,20,0.3);
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      transition: border-color 0.2s, transform 0.15s;
+    }
+    .btn-outline:hover { border-color: var(--ink); transform: translateY(-2px); }
+
+    /* HERO PHOTO */
+    .hero-image-wrap {
+      animation: fadeUp 0.85s 0.18s ease both;
+      display: flex;
+      justify-content: center;
+    }
+
+    .photo-frame {
+      position: relative;
+      width: 340px;
+      max-width: 100%;
+    }
+    .photo-frame::before {
+      content: '';
+      position: absolute;
+      inset: 14px -14px -14px 14px;
+      background: rgba(26,24,20,0.12);
+      border-radius: 4px;
+      z-index: 0;
+    }
+
+    .photo-frame img,
+    .photo-placeholder {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      border-radius: 4px;
+      display: block;
+    }
+    .photo-placeholder {
+      background: rgba(26,24,20,0.08);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      color: rgba(26,24,20,0.4);
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .photo-placeholder svg { width: 2.5rem; height: 2.5rem; }
+
+    /* ABOUT */
+    .about {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 7rem 3rem;
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      padding-top: 0.4rem;
+    }
+
+    .about-body h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.7rem, 3vw, 2.3rem);
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.015em;
+    }
+    .about-body h2 em {
+      font-style: italic;
+      background: var(--yellow);
+      padding: 0 0.2em;
+    }
+
+    .about-body p {
+      color: var(--ink-soft);
+      font-size: 1rem;
+      line-height: 1.85;
+      margin-bottom: 1.25rem;
+      max-width: 58ch;
+    }
+
+    .pillars {
+      display: flex;
+      margin-top: 2.5rem;
+      border: 1px solid var(--sand-light);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .pillar {
+      flex: 1;
+      padding: 1.25rem 1.5rem;
+      border-right: 1px solid var(--sand-light);
+    }
+    .pillar:last-child { border-right: none; }
+
+    .pillar-icon {
+      width: 2rem; height: 2rem;
+      background: var(--yellow);
+      border-radius: 50%;
+      margin-bottom: 0.75rem;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .pillar-icon svg { width: 1rem; height: 1rem; }
+    .pillar-title { font-weight: 500; font-size: 0.82rem; color: var(--ink); margin-bottom: 0.2rem; }
+    .pillar-sub { font-size: 0.75rem; color: var(--ink-muted); line-height: 1.4; }
+
+    /* PROJECTS */
+    .projects { background: var(--ink); padding: 7rem 3rem; }
+    .projects-inner { max-width: 1200px; margin: 0 auto; }
+
+    .projects-header {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 4rem;
+      margin-bottom: 4rem;
+      align-items: end;
+    }
+    .projects-header .section-label { color: rgba(250,248,244,0.35); }
+    .projects-header h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      line-height: 1.2;
+      letter-spacing: -0.015em;
+      color: var(--cream);
+    }
+    .projects-header p {
+      color: rgba(250,248,244,0.5);
+      font-size: 1rem;
+      line-height: 1.75;
+      max-width: 52ch;
+      align-self: end;
+    }
+
+    .project-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 6px;
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.25s, border-color 0.25s;
+    }
+    .project-card:hover { transform: translateY(-5px); border-color: var(--yellow); }
+
+    .card-image {
+      width: 100%;
+      aspect-ratio: 16/9;
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .card-image img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+    .project-card:hover .card-image img { transform: scale(1.03); }
+
+    .card-image-placeholder {
+      width: 100%; height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      color: rgba(250,248,244,0.25);
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, rgba(245,230,66,0.06) 0%, rgba(255,255,255,0.01) 100%);
+    }
+    .card-image-placeholder svg { width: 2rem; height: 2rem; opacity: 0.35; }
+
+    .card-image::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--yellow);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+    .project-card:hover .card-image::after { transform: scaleX(1); }
+
+    .card-body {
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      flex: 1;
+    }
+    .card-tag {
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--yellow);
+      opacity: 0.75;
+    }
+    .card-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.45rem;
+      line-height: 1.2;
+      color: var(--cream);
+    }
+    .card-desc {
+      font-size: 0.9rem;
+      color: rgba(250,248,244,0.48);
+      line-height: 1.7;
+      flex: 1;
+    }
+    .card-link {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(250,248,244,0.35);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+      transition: color 0.2s;
+    }
+    .project-card:hover .card-link { color: var(--yellow); }
+    .card-link svg { transition: transform 0.2s; }
+    .project-card:hover .card-link svg { transform: translateX(3px); }
+
+    /* WORK WITH ME */
+    .wwm-wrap {
+      background: var(--yellow);
+      position: relative;
+      overflow: hidden;
+    }
+    .wwm-wrap::before {
+      content: '';
+      position: absolute;
+      left: -8vw; bottom: -8vw;
+      width: 40vw; height: 40vw;
+      border-radius: 50%;
+      background: rgba(26,24,20,0.06);
+      pointer-events: none;
+    }
+
+    .work-with-me {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 7rem 3rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .work-with-me .section-label { color: rgba(26,24,20,0.4); margin-bottom: 1rem; }
+
+    .work-with-me h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2rem, 3.8vw, 3.2rem);
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin-bottom: 1.5rem;
+    }
+    .work-with-me p {
+      color: rgba(26,24,20,0.68);
+      font-size: 1rem;
+      line-height: 1.8;
+      max-width: 46ch;
+      margin-bottom: 2.25rem;
+    }
+
+    .ways-list { list-style: none; display: flex; flex-direction: column; gap: 1.25rem; }
+    .ways-list li {
+      display: flex;
+      gap: 1.1rem;
+      align-items: flex-start;
+      background: rgba(26,24,20,0.06);
+      padding: 1.2rem;
+      border-radius: 4px;
+      transition: background 0.2s;
+    }
+    .ways-list li:hover { background: rgba(26,24,20,0.1); }
+
+    .way-icon {
+      width: 2rem; height: 2rem;
+      background: var(--ink);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .way-icon svg { width: 0.9rem; height: 0.9rem; color: var(--yellow); }
+    .way-title { font-weight: 500; font-size: 0.88rem; color: var(--ink); margin-bottom: 0.2rem; }
+    .way-desc { font-size: 0.82rem; color: rgba(26,24,20,0.58); line-height: 1.6; }
+
+    /* FOOTER */
+    footer { background: var(--ink); padding: 3rem; }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+    .footer-name { font-family: 'DM Serif Display', serif; font-size: 1.15rem; color: var(--cream); }
+    .footer-sub { font-size: 0.76rem; color: rgba(250,248,244,0.3); margin-top: 0.2rem; }
+
+    .footer-links { display: flex; gap: 2rem; list-style: none; }
+    .footer-links a {
+      font-size: 0.76rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(250,248,244,0.38);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--yellow); }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* RESPONSIVE */
+    @media (max-width: 860px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+
+      .hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 4rem; gap: 3rem; }
+      .hero-image-wrap { order: -1; }
+      .photo-frame { width: 220px; }
+
+      .about { grid-template-columns: 1fr; gap: 2rem; padding: 4.5rem 1.5rem; }
+      .pillars { flex-direction: column; }
+      .pillar { border-right: none; border-bottom: 1px solid var(--sand-light); }
+      .pillar:last-child { border-bottom: none; }
+
+      .projects { padding: 4.5rem 1.5rem; }
+      .projects-header { grid-template-columns: 1fr; gap: 1.25rem; margin-bottom: 2.5rem; }
+
+      .work-with-me { grid-template-columns: 1fr; gap: 3rem; padding: 4.5rem 1.5rem; }
+
+      footer { padding: 2.5rem 1.5rem; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-name">ROY OPATA OLENDE</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#work-with-me">Work With Me</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO — yellow -->
+  <div class="hero-wrap">
+    <section class="hero">
+      <div class="hero-text">
+        <p class="hero-eyebrow">Research × Product Strategy</p>
+        <h1>Most teams<br>ship fast.<br><em>Few learn</em><br>consistently.</h1>
+        <p class="hero-sub">I build the bridge — research infrastructure that growing teams need to keep pace with their own velocity.</p>
+        <div class="hero-cta-group">
+          <a href="#work-with-me" class="btn-dark">Work With Me</a>
+          <a href="#projects" class="btn-outline">See My Work</a>
+        </div>
+      </div>
+      <div class="hero-image-wrap">
+        <div class="photo-frame">
+          <!-- Swap this div for: <img src="your-photo.jpg" alt="Roy Opata Olende" /> -->
+          <div class="photo-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+            <span>Your photo here</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ABOUT — cream -->
+  <section class="about" id="about">
+    <div class="reveal">
+      <p class="section-label">About</p>
+    </div>
+    <div class="about-body reveal">
+      <h2>UXR & Research Ops Leader.</h2>
+      <p>I work at the intersection of research and product strategy, helping organizations move faster and smarter by staying connected to the people they're building for. I've built the organizational infrastructure that makes research scale, and I've done the fast, scrappy work that reshapes a product in days.</p>
+    </div>
+  </section>
+
+  <!-- PROJECTS — dark -->
+  <section class="projects" id="projects">
+    <div class="projects-inner">
+      <div class="projects-header reveal">
+        <div>
+          <p class="section-label">Current Projects</p>
+        </div>
+      </div>
+
+      <div class="project-cards">
+
+        <a href="https://scalingresearch.com" target="_blank" rel="noopener" class="project-card reveal">
+          <div class="card-image">
+            <!--
+              TO ADD YOUR SCREENSHOT:
+              1. Take a screenshot of scalingresearch.com
+              2. Save it as "scalingresearch.png" in the same folder as this file
+              3. Replace the div below with:
+                 <img src="scalingresearch.png" alt="Scaling Research" />
+            -->
+            <div class="card-image-placeholder">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="3" y="3" width="18" height="14" rx="2"/>
+                <path d="M3 9h18M9 21h6M12 17v4"/>
+              </svg>
+              <span>Add screenshot</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <span class="card-tag">Substack · Publication</span>
+            <h3 class="card-title">Scaling Research</h3>
+            <p class="card-desc">For research leaders navigating the complexity of growing research functions — ops, tooling, team design, and the politics of insight at scale.</p>
+            <span class="card-link">
+              scalingresearch.com
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </div>
+        </a>
+
+        <a href="https://aionboardreview.com" target="_blank" rel="noopener" class="project-card reveal">
+          <div class="card-image">
+            <!--
+              TO ADD YOUR SCREENSHOT:
+              1. Take a screenshot of aionboardreview.com
+              2. Save it as "aionboardreview.png" in the same folder as this file
+              3. Replace the div below with:
+                 <img src="aionboardreview.png" alt="AI Onboard Review" />
+            -->
+            <div class="card-image-placeholder">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="3" y="3" width="18" height="14" rx="2"/>
+                <path d="M3 9h18M9 21h6M12 17v4"/>
+              </svg>
+              <span>Add screenshot</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <span class="card-tag">Substack · Publication</span>
+            <h3 class="card-title">AI Onboard Review</h3>
+            <p class="card-desc">Research-backed analysis of how AI products onboard new users — what works, what fails, and what it signals about the teams behind the product.</p>
+            <span class="card-link">
+              aionboardreview.com
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK WITH ME — yellow -->
+  <div class="wwm-wrap">
+    <section class="work-with-me" id="work-with-me">
+      <div class="reveal">
+        <p class="section-label">Work With Me</p>
+        <h2>Focused research that moves your product forward.</h2>
+        <p>You don't always need a research team. Sometimes you need someone who can come in, get close to your users quickly, and hand you insights that change how you build. I've done this at companies redefining their categories — a week of the right research can reshape a roadmap, validate a bet, or kill a bad idea before it ships.</p>
+        <a href="YOUR_CONTACT_FORM_LINK_HERE" target="_blank" rel="noopener" class="btn-dark">Get in Touch →</a>
+      </div>
+
+      <ul class="ways-list reveal">
+        <li>
+          <div class="way-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <div>
+            <div class="way-title">Rapid Research Sprints</div>
+            <div class="way-desc">I embed with your team for 1–4 weeks, talk to your users, and deliver findings that directly feed your next product decision. Fast, focused, and immediately actionable.</div>
+          </div>
+        </li>
+        <li>
+          <div class="way-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          </div>
+          <div>
+            <div class="way-title">Research Infrastructure</div>
+            <div class="way-desc">I set up the lightweight systems your team needs to keep collecting insights on their own — without a dedicated researcher. Templates, processes, tooling, done in days not months.</div>
+          </div>
+        </li>
+        <li>
+          <div class="way-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div>
+            <div class="way-title">Product Direction Diagnostics</div>
+            <div class="way-desc">Feeling stuck on a feature, a value prop, or why users aren't converting? I come in, run targeted research, and give you a clear picture of what's blocking you and what to do about it.</div>
+          </div>
+        </li>
+      </ul>
+    </section>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <div class="footer-name">Roy Opata Olende</div>
+        <div class="footer-sub">Research → Product Strategy · UXR & Research Ops</div>
+      </div>
+      <ul class="footer-links">
+        <li><a href="https://scalingresearch.com" target="_blank">Scaling Research</a></li>
+        <li><a href="https://aionboardreview.com" target="_blank">AI Onboard Review</a></li>
+        <li><a href="#work-with-me">Contact</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver(
+      entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+      { threshold: 0.1 }
+    );
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
